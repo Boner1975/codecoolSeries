@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% block title %}Shows{% endblock %}
+
+{% block content %}
+	{% set show_table_headers = ['Title', 'Year', 'Runtime', 'Trailer', 'Homepage', 'Rating', 'Genre'] %}
+
+	<h1 class="title text-center">Shows</h1>
+	<div class="card">
+		<p class="text-center">Top 15 rated shows</p>
+		<table>
+			<thead>
+			<tr>
+				{% for header in show_table_headers %}
+					<th>{{ header }}</th>
+				{% endfor %}
+			</tr>
+			</thead>
+			<tbody>
+			{% for show in shows %}
+				<tr>
+					<td><a href="#">{{ show.title }}</a></td>
+					<td class="text-center">{{ show.year }}</td>
+					<td class="text-center">{{ show.runtime }}</td>
+					{% if show.trailer != None %}
+						<td class="text-center"><a href="{{ show.trailer }}">link</a></td>
+					{% else %}
+						<td class="text-center">No url</td>
+					{% endif %}
+					{% if show.homepage != None %}
+						<td class="text-center"><a href="{{ show.homepage }}">link</a></td>
+					{% else %}
+						<td class="text-center">No url</td>
+					{% endif %}
+					<td class="text-center">{{ show.rating|string }}</td>
+					<td>{{ show.genres }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{#	<div class="pagination text-center">#}
+{#		<a href="#">&laquo;</a>#}
+{#		<a href="{{ url_for('route_most_rated_shows', page=1) }}">1</a>#}
+{#		<a href="#">2</a>#}
+{#		<a href="#">3</a>#}
+{#		<a href="#">4</a>#}
+{#		<a href="#">5</a>#}
+{#		<a href="#">6</a>#}
+{#		<a href="#">7</a>#}
+{#		<a href="#">&raquo;</a>#}
+{#	</div>#}
+
+{% endblock %}
