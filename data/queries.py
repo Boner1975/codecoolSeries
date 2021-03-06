@@ -5,7 +5,7 @@ from psycopg2 import sql
 def get_shows():
     return data_manager.execute_select('SELECT id, title FROM shows;')
 
-def get_shows_by_parm(column='rating', order='desc', limit=0):
+def get_shows_by_parm(column='rating', order='desc', limit=0, offset=0):
 
     return data_manager.execute_select(
         sql.SQL("""
@@ -20,8 +20,9 @@ def get_shows_by_parm(column='rating', order='desc', limit=0):
                 case when %(order)s = 'asc' then {column} end ASC, 
                 case when %(order)s = 'desc' then {column} end DESC 
             LIMIT %(limit)s
+            OFFSET %(offset)s
         """).format(column=sql.Identifier(column)),
-        {'order': order, 'limit': limit}
+        {'order': order, 'limit': limit, 'offset': offset}
     )
 
 
@@ -64,3 +65,11 @@ def get_show_characters(id, limit = 3):
             LIMIT %(limit)s
         """),
         {'id': id, 'limit': limit})
+
+def get_show_count():
+
+    return data_manager.execute_select(
+        """
+        SELECT COUNT(*) FROM shows
+        """
+    )
