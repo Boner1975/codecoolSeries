@@ -1,6 +1,8 @@
 from data_manager import get_connection_data, establish_connection
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def init_db():
     init_conn = get_connection_data('postgres')
